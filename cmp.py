@@ -43,7 +43,7 @@ def cmp_file(srcdir,dstdir):
 	rmfile = 0
 	for parent,dirnames,filenames in os.walk(srcdir):
 		for filename in filenames:
-			srcpath = parent+"\\"+filename
+			srcpath = os.path.join(parent,filename)
 			dstpath = dstdir+srcpath[plen:len(srcpath)]
 			#print(srcpath)
 			#print(dstpath)
@@ -62,7 +62,7 @@ def cmp_file(srcdir,dstdir):
 def filter_file(srcdir,endlist):
 	for parent,dirnames,filenames in os.walk(srcdir):
 		for filename in filenames:
-			srcpath = parent+"\\"+filename
+			srcpath = os.path.join(parent,filename)
 			for end in endlist:
 				if re.match(".+"+end+"$",srcpath):
 					os.remove(srcpath)
@@ -77,9 +77,9 @@ def run():
 	if len(sys.argv)<3:
 		print "please input a,b dir"
 		return
-	srcdir = os.getcwd()+"\\"+sys.argv[1]
-	dstdir = os.getcwd()+"\\"+sys.argv[2]
-	outdir = os.getcwd()+"\\"+sys.argv[2]+"out"
+	srcdir = os.path.join(os.getcwd(),sys.argv[1])
+	dstdir = os.path.join(os.getcwd(),sys.argv[2])
+	outdir = os.path.join(os.getcwd(),sys.argv[2]+"out")
 	rm_dir(outdir)
 	os.mkdir(outdir)
 	copy_dir(dstdir,outdir)
@@ -87,12 +87,14 @@ def run():
 	diffs = cmp_file(srcdir,outdir)
 	if diffs>0:
 		print "zip diff"
+		if os.path.isfile("diff.zip"):
+			os.remove("diff.zip")
 		os.system("7z.exe a -tzip -r diff.zip " + outdir +"\*.*")
 		os.system("7z.exe l diff.zip")
 		print "zip diff File : diff.zip"
 		return "diff.zip"
 	else:
-		print "no diff File"	
+		print "no diff File"
 
 
 #run()
