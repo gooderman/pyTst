@@ -262,23 +262,35 @@ print '================================='
 print "httplib"
 import httplib
 import urllib
-con = httplib.HTTPSConnection("cn.bing.com")
-con.request("GET","/","",{"auth":"jeep"})
-httpres=con.getresponse()
-print httpres.status  
-print httpres.reason
-body = httpres.read(140)
-print len(body)
-import re
-rst = re.search(r"(EN).*((html){3})(.*)","ENppop \" \"> fadsfffhtmlhtmlhtml---fds")
-#print body
-#rst = re.search(r"(EN).*?(html ){3}(.*).*",body)
-if rst:
-	print "rst 0",rst.group()
-	print "rst 1",rst.group(1)
-	print "rst 2",rst.group(2)
-	print "rst 3",rst.group(3)
-	print "rst 4",rst.group(4)
-else:
-	print "rst None"
+try:
+	con = httplib.HTTPSConnection("cn.bing.com")
+	con.request("GET","/","",{"auth":"jeep"})
+	httpres=con.getresponse()
+	print httpres.status  
+	print httpres.reason
+	body = httpres.read(140)
+	print len(body)
+	import re
+	rst = re.search(r"(EN).*((html){3})(.*)","ENppop \" \"> fadsfffhtmlhtmlhtml---fds")
+	#print body
+	#rst = re.search(r"(EN).*?(html ){3}(.*).*",body)
+	if rst:
+		print "rst 0",rst.group()
+		print "rst 1",rst.group(1)
+		print "rst 2",rst.group(2)
+		print "rst 3",rst.group(3)
+		print "rst 4",rst.group(4)
+	else:
+		print "rst None"
+except BaseException,Arguments:
+	print "except httplib ",Arguments
+finally:
+	print "finally httplib "
+print '================================='
+print 'string.format'
+item='{"%s","%s",%d}'%("a","B",123)
+#item=R'{ "%s" , "%s" , %d }'%("a","B",123)
+print item
+item="{name},{size}".format(name="Lisa",size=100)
+print item
 print '================================='

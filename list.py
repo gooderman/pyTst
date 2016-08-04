@@ -80,7 +80,7 @@ def stringlize(dirlist,filelist):
 	buf = buf + "\tresvercode = " + str(resvercode) + ",\n" 
 	buf = buf + "\tdirs = {\n"
 	for dname in dirlist:
-		item="\t\t\"%s\",\n"%(dname)
+		item='\t\t"%s",\n'%(dname)
 		buf=buf+item
 	buf = buf+"\t},\n"
 
@@ -89,7 +89,7 @@ def stringlize(dirlist,filelist):
 		nm = tp[0]
 		md = tp[1]
 		sz = tp[2]
-		item="\t\t{\"%s\",\"%s\",%d},\n"%(nm,md,sz)
+		item='\t\t{"%s","%s",%d},\n'%(nm,md,sz)
 		buf = buf+item
 	buf = buf+"\t},\n" 
 	buf = buf+"}\n\n" 
