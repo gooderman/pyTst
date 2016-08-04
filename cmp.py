@@ -95,6 +95,6 @@ def run():
 		print "no diff File"	
 
 
-run()
+#run()
 #py cmp.py A B
 #'''
