@@ -3,6 +3,8 @@ import os
 import sys
 import shutil
 import re
+import json
+import zipfile
 def tst_function() :
 	print 'tst_function'
 	sam = lambda a,b : a+b
@@ -135,13 +137,14 @@ def tst_class():
 	del b
 
 def tst_file():
-	filepath = os.path.join(os.getcwd(),'test.py')
-	fd = open(filepath,'r')
+	filepath = os.path.join(os.getcwd(),'tst.txt')
+	fd = open(filepath,'r+w')
 	lines = file.readlines(fd)
 	print '\n\n#############################'
 	for i in range(len(lines)) :
 		print ":%-4d %s" % (i,lines[i])
 	print '#############################\n\n'
+	file.write(fd,'123456789\r\n')
 	file.close(fd)
 
 def tst_re():
@@ -153,18 +156,64 @@ def tst_re():
 	print obj.group(2)
 
 	print re.findall(patten,content)
-############################################
-global g_var
-tst_base()
+
+def tst_json():
+	print 'sys.argv', len(sys.argv), sys.argv
+	jstr='[1,2,3,4]'
+	print json.loads(jstr)
+	# strdata = '{"a":1,"b":2,"c":3,"d":4,"e":5}'
+	# dic = json.loads(strdata)
+	# if dic:
+	# 	print dic
+	# 	print dic['a']
+def tst_zip():
+	zf = zipfile.ZipFile('zz.zip','w',zipfile.ZIP_DEFLATED)
+	zf.write('tst.txt','/aaa/Ztst.txt')
+	info  = zf.getinfo('aaa/Ztst.txt')
+	print info.filename
+	print info.date_time
+	print info.compress_type
+	print info.file_size
+	print info.compress_size
+	print info.CRC
+	zf.close()
+
+	zf = zipfile.ZipFile('zz.zip','r')
+	zf.extractall(os.path.join(os.getcwd(),'zdir/'))
+	infos  = zf.infolist()
+	for info in infos:
+		print info
+
+def tst_os():
+    # for k in os.environ.keys():
+    # 	print k+"  :  "+os.environ[k]
+	print os.name
+	ppp = os.path.join(os.getcwd(),"abc")
+	if os.path.exists(ppp):
+		for root,dirs,files in os.walk(ppp,False):
+			print root
+			print dirs
+			print files
+			for file in files:
+				os.remove(os.path.join(root,file))
+			for dd in dirs:
+				os.rmdir(os.path.join(root,dd))
+		os.removedirs(ppp)
+	os.mkdir(ppp)
+	os.makedirs(os.path.join(ppp,"def/hij/abc"))
+	print os.listdir(ppp)
 # print 'g_var = ' , g_var
-tst_function()
-tst_string()
-tst_list()	
-tst_tupe()
-tst_set()
-tst_dic()
-tst_if()
-tst_for()
-tst_class()
-tst_file()
-tst_re()
+# tst_function()
+# tst_string()
+# tst_list()	
+# tst_tupe()
+# tst_set()
+# tst_dic()
+# tst_if()
+# tst_for()
+# tst_class()
+# tst_file()
+# tst_re()
+# tst_json()
+# tst_zip()
+tst_os()
