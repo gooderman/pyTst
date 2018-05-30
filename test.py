@@ -32,6 +32,10 @@ def tst_string() :
 	print 'format {0}-{1}-{0}'.format(100,200)
 	# print 'format {0:-4d}-{0:04d}-{0:04X}'.format(16)
 	# print "format {aaa},{bbb}".format( "aaa"=100, "bbb"=200 )
+	name = 'http://ab.com/ui new/abc def.png'
+	print 'find space %d' % name.find(" ")
+	name = 'http://ab.com/ui_new/abc_def.png'
+	print 'find space %d' % name.find(" ")
 
 def tst_list() :
 	ll = []
@@ -44,6 +48,7 @@ def tst_list() :
 	print ll[5:]
 	print 2 in ll
 	print 10 in ll
+	print "list len=%d" % len(ll)
 
 def tst_tupe() :
 	tu = ()
@@ -202,10 +207,14 @@ def tst_os():
 	os.mkdir(ppp)
 	os.makedirs(os.path.join(ppp,"def/hij/abc"))
 	print os.listdir(ppp)
+
+def tst_exception():
+	 raise Exception("tst_exception")
+
 # print 'g_var = ' , g_var
 # tst_function()
-# tst_string()
-# tst_list()	
+tst_string()
+tst_list()	
 # tst_tupe()
 # tst_set()
 # tst_dic()
@@ -217,3 +226,4 @@ def tst_os():
 # tst_json()
 # tst_zip()
 tst_os()
+tst_exception()
